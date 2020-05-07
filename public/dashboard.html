@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+</head>
+<body>
+    <form>
+        
+        <div>
+            <label for="sex">Select target Gender</label>
+            <select name="ChooseTargetGender" id="sex">
+                <option value="Female">Female</option>
+                <option value="Male">Male</option>
+            </select>
+        </div>
+        <div>
+            <input type="button" value="StartSearching !!!" id="sumbit" , onclick=setAtr()>
+        <div>
+        
+    </form>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+       
+
+        function setAtr ()
+        {
+            console.log('wtf')
+            sessionStorage.setItem('targetSex' , document.getElementById('sex').value)
+            axios({
+                method : 'post',
+                url : '/message',
+                data:
+                {
+                    token : sessionStorage.getItem('token'),
+                }
+
+            }).then(res =>{
+                window.location = '/message'
+            })
+               
+            
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"
+			integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk="
+			crossorigin="anonymous"
+		/>
+		<link rel="stylesheet" href="css/style.css" />
+		<title>ChatCord App</title>
+	</head>
+	<body>
+		<div class="join-container">
+			<header class="join-header">
+				<h1><i class="fas fa-smile"></i> ChatCord</h1>
+			</header>
+			<main class="join-main">
+				<form action="/chat" , method="POST">
+					<div class="form-control">
+						Please Wait to Connect
+					<div>
+						<input type="hidden" name="token" , id="token-f">
+					</div>
+					
+					<button type="submit" class="btn" , id='search' , >Serach</button>
+				</form>
+			</main>
+		</div>
+		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+		<script>
+			document.getElementById('token-f').value = sessionStorage.getItem('token')
+
+			if(sessionStorage.getItem('room') == null)
+			{
+				document.getElementById('search').style.visibility = 'hidden'
+			}
+
+			
+
+			if(sessionStorage.getItem('token'))
+			 axios({
+				method : 'post' ,
+				url : '/users/set',
+				data : {
+					username : sessionStorage.getItem('username'),
+					sex : sessionStorage.getItem('targetSex')
+				}
+			}).then(result =>
+			{
+				console.log(result.data)
+				if(result.data.room != 'notFound')
+				{
+					document.getElementById('search').style.visibility = 'visible'
+				sessionStorage.setItem('room' , result.data.room)
+				axios({
+					method : 'post',
+					url : '/users/setAtr',
+					data :{
+						username : sessionStorage.getItem('username')
+					}
+				})
+				console.log(sessionStorage.getItem('room'))
+				
+				}
+			})
+
+			
+		</script>
+	</body>
+</html>
